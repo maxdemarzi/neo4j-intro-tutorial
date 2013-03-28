@@ -1,0 +1,3 @@
+USBKEY/CONFIG/*.properties eol=crlf
+USBKEY/*.bat eol=crlf
+USBKEY/*.txt eol=crlf
