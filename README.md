@@ -3,10 +3,10 @@ Neo4j Tutorial Trainers Pack
 
 Contents:
 
-* `Neo4j Tutorial.key` - Keynote presentation (this is the master).
-* `Neo4j Tutorial.ppt` - Powerpoint presentation (a manually adjusted export
+* `Neo4j Intro Tutorial.key` - Keynote presentation (this is the master).
+* `Neo4j Intro Tutorial.ppt` - Powerpoint presentation (a manually adjusted export
   from keynote).
-* `Neo4j Tutorial.pdf` - PDF export of selected slides, to be provided
+* `Neo4j Intro Tutorial.pdf` - PDF export of selected slides, to be provided
   to students AFTER the tutorial.
 * `USBKEY` - Contents of this directory should be placed onto USB keys and
   supplied to students.
