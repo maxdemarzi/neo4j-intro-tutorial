@@ -1,0 +1,127 @@
+{
+    "Description": "Neo4j on AWS - creates a stack and deploys Neo4j on it",
+    "Parameters": {
+        "AcceptOracleLicense" : {
+              "Description" : "This parameter indicates that you accept the terms of Oracle's License Agreement for Java (see README)",
+              "Type" : "String",
+              "AllowedValues": ["true", "false"],
+              "Default": "true"
+            },
+        "Neo4jUserName": {
+            "Description" : "Username for the Neo4j REST API",
+            "Type" : "String"
+        },
+
+        "Neo4jPassword": {
+            "Description" : "Password for the Neo4j REST API",
+             "Type" : "String",
+             "NoEcho": "True"
+        },
+        "SSHKeyName": {
+            "Description" : "Name of the SSH key that you will use to access the server (must be on AWS US-EAST already)",
+            "Type" : "String",
+            "Default": "neo4j"
+        },
+        "AwsAvailabilityZone": {
+            "Description": "Name of the AWS availability zone that you will deploy into",
+            "Type": "String",
+            "AllowedValues": ["us-west-1a", "us-west-1b", "us-west-1c"],
+            "Default": "us-west-1a"
+        }
+    },
+    "Resources": {
+        "ElasticIP": {
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "InstanceId": {
+                    "Ref": "Server"
+                }
+            }
+        },
+        "Server": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "AvailabilityZone": {"Ref": "AwsAvailabilityZone"},
+                "DisableApiTermination": "FALSE",
+                "ImageId": "ami-827252c7",
+                "InstanceType": "m1.medium",
+                "KeyName": {"Ref": "SSHKeyName"},
+                "Monitoring": "false",
+                "SecurityGroups": [
+                    {
+                        "Ref": "sgNeo4jServer"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "Neo4j on AWS"
+                    }
+                ],
+                "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
+                        "#!/bin/bash -v\n",
+                        "wget -O /var/tmp/go https://raw.github.com/neo4j-contrib/neo4j-puppet/master/go\n",
+                        "chmod +x /var/tmp/go\n",
+                        "sudo /var/tmp/go ", { "Ref" : "AcceptOracleLicense" } , " ", {"Ref": "Neo4jUserName"}, " ", {"Ref": "Neo4jPassword"}, "\n",
+                        "wget -O /var/tmp/neo4j.properties https://s3-us-west-1.amazonaws.com/neo4j-aws-training/config/neo4j.properties\n",
+                        "sudo sh -c 'cat /var/tmp/neo4j.properties > /var/lib/neo4j/conf/neo4j.properties'\n",
+                        "sudo /etc/init.d/neo4j-service restart\n",
+                        "wget -O /var/tmp/movies.cyp https://s3-us-west-1.amazonaws.com/neo4j-aws-training/sample/movies.cyp\n",
+                        "neo4j-shell < /var/tmp/movies.cyp\n"
+                      ]]}},
+                "Volumes" : [
+                          { "VolumeId" : { "Ref" : "EBSVolume" },
+                            "Device" : "/dev/sdj"
+                          }]
+
+            }
+        },
+        "EBSVolume": {
+            "Type": "AWS::EC2::Volume",
+            "Properties": {
+                "AvailabilityZone":  {"Ref": "AwsAvailabilityZone"},
+                "Size": "100"
+            }
+        },
+        "sgNeo4jServer": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Neo4j Ports",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "7474",
+                        "ToPort": "7474",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "Neo4jWebadmin" : {
+            "Value" : { "Fn::Join" : ["", ["http://", { "Fn::GetAtt" : [ "Server", "PublicIp" ]}, ":7474"]] },
+            "Description" : "This is the address of your Neo4j server web administration console."
+          },
+        "Neo4jEndPoint" : {
+            "Value" : { "Fn::Join" : ["", ["http://", { "Fn::GetAtt" : [ "Server", "PublicIp" ]}, ":7474/db/data"]] },
+            "Description" : "This is the address of your Neo4j server, that your application will use."
+          },
+        "SshAccess": {
+            "Value" : {"Fn::Join" : ["", ["ssh -i ", {"Ref": "SSHKeyName"}, ".pem -l ubuntu ", { "Fn::GetAtt" : [ "Server", "PublicIp" ]}]]},
+            "Description" : "This is how you gain remote access to the machine."
+        },
+        "Note" :{
+            "Value" : "Your stack is probably still building.  It takes 5-10 minutes to get Neo4j and dependencies built.  Coffee time?",
+            "Description" : "Setting user expectations on timing."
+        }
+    },
+
+    "AWSTemplateFormatVersion": "2010-09-09"
+}

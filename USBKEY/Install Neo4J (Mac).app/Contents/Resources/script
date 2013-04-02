@@ -1,8 +1,0 @@
-#!/bin/bash
-
-dist_dir=$(cd "`dirname \"$0\"`/../../.." && pwd)
-
-(cd "$dist_dir" && ./install_neo4j.sh -f)
-open -a Terminal "$HOME/neo4j-community-1.9.M05"
-sleep 1
-open -a TextEdit "$dist_dir/README.txt"
