@@ -16,6 +16,6 @@ diskutil renameVolume "$blank_volume" "$target_volume_name"
 sleep 5
 mdutil -i off "$target_volume"
 sleep 3
-rsync -avP "$dist_dir/USBKEY/" "$target_volume/"
-find "$target_volume" -name '.*' -print0 | xargs -0 rm -rf 
+rsync -avP --delete "$dist_dir/USBKEY/" "$target_volume/"
+find "$target_volume" -name '.*' -delete
 diskutil eject "$target_volume"
