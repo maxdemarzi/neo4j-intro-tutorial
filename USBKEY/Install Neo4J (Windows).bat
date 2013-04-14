@@ -49,8 +49,8 @@ echo Modifying default configuration
 copy /Y "%dist_dir%\CONFIG\neo4j.properties" "%prefix%\%release%\conf" > NUL
 
 echo Copying sample datasets
-mkdir "%prefix%\%release%\sampledata" > NUL
-copy "%dist_dir%\SAMPLE\*.cyp" "%prefix%\%release%\sampledata" > NUL
+mkdir "%prefix%\%release%\sample" > NUL
+copy "%dist_dir%\SAMPLE\*.cyp" "%prefix%\%release%\sample" > NUL
 
 echo Copying tools
 copy "%dist_dir%\TOOLS\gumdrop.jar" "%prefix%\%release%" > NUL
