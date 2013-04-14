@@ -1,7 +1,7 @@
 @ECHO OFF
 
 SET prefix=%USERPROFILE%
-SET neo4j_version=1.9.M05
+SET neo4j_version=1.9.RC1
 
 SET dist_dir=%~dp0
 SET release=neo4j-community-%neo4j_version%
