@@ -349,7 +349,7 @@ CREATE
   (JoelS)-[:PRODUCED]->(SpeedRacer)
 
 CREATE (NinjaAssassin {title:'Ninja Assassin', released:2009, tagline:'Prepare to enter a secret world of assassins'})
-CREATE (NaomieH {name:'Naomie Hirsch'})
+CREATE (NaomieH {name:'Naomie Harris'})
 CREATE
   (Rain)-[:ACTED_IN {roles:['Raizo']}]->(NinjaAssassin),
   (NaomieH)-[:ACTED_IN {roles:['Mika Coretti']}]->(NinjaAssassin),
