@@ -23,6 +23,6 @@ fi
 set -x
 mdutil -i off "$target_volume"
 sleep 3
-rsync -avP --size-only --exclude '.*' --delete --delete-excluded "$dist_dir/USBKEY/" "$target_volume/"
+rsync -avP --size-only --exclude '.*' "$dist_dir/USBKEY/" "$target_volume/"
 find "$target_volume" -name '.*' -delete
 diskutil eject "$target_volume"
