@@ -8,7 +8,7 @@ if ! java -version > /dev/null 2>&1; then
 fi
 
 prefix="$HOME"
-neo4j_version=1.9.RC1
+neo4j_version=1.9.RC2
 
 dist_dir=$(cd "`dirname "$0"`" && pwd)
 release=neo4j-community-${neo4j_version}
@@ -59,9 +59,6 @@ cp "$dist_dir/CONFIG/neo4j.properties" "$prefix/$release/conf"
 echo "Copying sample datasets"
 mkdir "$prefix/$release/sample"
 cp "$dist_dir"/SAMPLE/*.cyp "$prefix/$release/sample"
-
-echo "Copying tools"
-cp "$dist_dir"/TOOLS/gumdrop.jar "$prefix/$release"
 
 echo
 echo "Neo4j ${neo4j_version} installed to $prefix/$release"

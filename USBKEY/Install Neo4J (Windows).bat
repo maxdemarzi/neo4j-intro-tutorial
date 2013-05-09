@@ -1,7 +1,7 @@
 @ECHO OFF
 
 SET prefix=%USERPROFILE%
-SET neo4j_version=1.9.RC1
+SET neo4j_version=1.9.RC2
 
 SET dist_dir=%~dp0
 SET release=neo4j-community-%neo4j_version%
@@ -51,9 +51,6 @@ copy /Y "%dist_dir%\CONFIG\neo4j.properties" "%prefix%\%release%\conf" > NUL
 echo Copying sample datasets
 mkdir "%prefix%\%release%\sample" > NUL
 copy "%dist_dir%\SAMPLE\*.cyp" "%prefix%\%release%\sample" > NUL
-
-echo Copying tools
-copy "%dist_dir%\TOOLS\gumdrop.jar" "%prefix%\%release%" > NUL
 
 echo.
 echo Neo4j %neo4j_version% installed to %prefix%\%release%
