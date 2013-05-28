@@ -8,7 +8,7 @@ if ! java -version > /dev/null 2>&1; then
 fi
 
 prefix="$HOME"
-neo4j_version=1.9.RC2
+neo4j_version=1.9
 
 dist_dir=$(cd "`dirname "$0"`" && pwd)
 release=neo4j-community-${neo4j_version}
