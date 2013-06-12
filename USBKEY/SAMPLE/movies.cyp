@@ -87,6 +87,7 @@ CREATE (AnthonyE {name:'Anthony Edwards', born:1962})
 CREATE (TomS {name:'Tom Skerritt', born:1933})
 CREATE (MegR {name:'Meg Ryan', born:1961})
 CREATE (TonyS {name:'Tony Scott', born:1944})
+CREATE (JimC {name:'Jim Cash', born:1941})
 CREATE
   (TomC)-[:ACTED_IN {roles:['Maverick']}]->(TopGun),
   (KellyM)-[:ACTED_IN {roles:['Charlie']}]->(TopGun),
@@ -94,8 +95,8 @@ CREATE
   (AnthonyE)-[:ACTED_IN {roles:['Goose']}]->(TopGun),
   (TomS)-[:ACTED_IN {roles:['Viper']}]->(TopGun),
   (MegR)-[:ACTED_IN {roles:['Carole']}]->(TopGun),
-  (RobR)-[:DIRECTED]->(AFewGoodMen),
-  (AaronS)-[:WROTE]->(AFewGoodMen)
+  (TonyS)-[:DIRECTED]->(TopGun),
+  (JimC)-[:WROTE]->(TopGun)
 
 CREATE (JerryMaguire {title:'Jerry Maguire', released:2000, tagline:'The rest of his life begins now.'})
 CREATE (ReneeZ {name:'Renee Zellweger', born:1969})
