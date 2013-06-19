@@ -7,27 +7,27 @@ CREATE INDEX ON :Movie(released);
 CREATE INDEX ON :Movie(tagline);
 CREATE INDEX ON :User(name);
 
-MATCH n
-WHERE has(n.title)
-SET n:Movie;
+MATCH node
+WHERE has(node.title)
+SET node:Movie;
 
-MATCH n
-WHERE n-[:ACTED_IN]->()
-SET n:Actor;
+MATCH node
+WHERE (node)-[:ACTED_IN]->()
+SET node:Actor;
 
-MATCH n
-WHERE n-[:DIRECTED]->()
-SET n:Director;
+MATCH node
+WHERE (node)-[:DIRECTED]->()
+SET node:Director;
 
-MATCH n
-WHERE n-[:WROTE]->()
-SET n:Writer;
+MATCH node
+WHERE (node)-[:WROTE]->()
+SET node:Writer;
 
-MATCH n
-WHERE n-[:PRODUCED]->()
-SET n:Producer;
+MATCH node
+WHERE (node)-[:PRODUCED]->()
+SET node:Producer;
 
-MATCH n
-WHERE n-[:FOLLOWS]-()
-SET n:User;
+MATCH node
+WHERE (node)-[:FOLLOWS]-()
+SET node:User;
 
